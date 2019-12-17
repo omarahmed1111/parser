@@ -366,6 +366,7 @@ namespace scanner
                         error = true;
                         //error
                     }
+                    temp.children.Add(temp2);
                     if (tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
@@ -386,6 +387,7 @@ namespace scanner
                     {
                         begin = false;
                         first = temp;
+                        
                     }
                     else
                     {
