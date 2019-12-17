@@ -14,10 +14,15 @@ namespace scanner
     {
         tree f;
         Panel p;
+        List<Color> colors;
+        int dep;
         public SyntaxTree(tree first)
         { 
             InitializeComponent();
             //this.DoubleBuffered = true;
+            colors = new List<Color>();
+            
+            dep = 0;
             this.AutoScroll = true;
             f = first;
             pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
@@ -25,8 +30,33 @@ namespace scanner
         
         public void drCircle(int x,int y,string text, Graphics e)
         {
+            Pen myPen;
+            if (dep == 0)
+            {
+                myPen = new Pen(Color.Red);
+            }
+            else if (dep == 1)
+            {
+                myPen = new Pen(Color.Blue);
+            }
+            else if (dep == 2)
+            {
+                myPen = new Pen(Color.Green);
+            }
+            else if (dep == 3)
+            {
+                myPen = new Pen(Color.Orange);
+            }
+            else if (dep == 4)
+            {
+                myPen = new Pen(Color.Tomato);
+            }
+            else
+            {
+                myPen = new Pen(Color.Violet);
+            }
             
-            Pen myPen = new Pen(Color.Red);
+            
             Pen mytextPen = new Pen(Color.Green);
             Font drawFont = new Font("Arial", 8);
             SolidBrush mySolidBrush = new SolidBrush(Color.Red);
@@ -38,8 +68,33 @@ namespace scanner
         }
         public void drrect(int x, int y, string text, Graphics e)
         {
+            Pen myPen;
+            if (dep == 0)
+            {
+                myPen = new Pen(Color.Red);
+            }
+            else if (dep == 1)
+            {
+                myPen = new Pen(Color.Blue);
+            }
+            else if (dep == 2)
+            {
+                myPen = new Pen(Color.Green);
+            }
+            else if (dep == 3)
+            {
+                myPen = new Pen(Color.Orange);
+            }
+            else if (dep == 4)
+            {
+                myPen = new Pen(Color.Tomato);
+            }
+            else
+            {
+                myPen = new Pen(Color.Violet);
+            }
+
             
-            Pen myPen = new Pen(Color.Red);
             Pen mytextPen = new Pen(Color.Green);
             Font drawFont = new Font("Arial", 8);
             SolidBrush mySolidBrush = new SolidBrush(Color.Red);
@@ -50,10 +105,35 @@ namespace scanner
         }
         public void drline(int x1,int y1,int x2,int y2, Graphics e)
         {
+            Pen myPen;
+            if (dep == 0)
+            {
+                myPen = new Pen(Color.Red);
+            }
+            else if (dep == 1)
+            {
+                myPen = new Pen(Color.Blue);
+            }
+            else if (dep == 2)
+            {
+                myPen = new Pen(Color.Green);
+            }
+            else if (dep == 3)
+            {
+                myPen = new Pen(Color.Orange);
+            }
+            else if (dep == 4)
+            {
+                myPen = new Pen(Color.Tomato);
+            }
+            else
+            {
+                myPen = new Pen(Color.Violet);
+            }
             Graphics myGraphics = base.CreateGraphics();
-            Pen p = new Pen(Color.Blue);
+            
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-            e.DrawLine(p, new Point(x1, y1), new Point(x2, y2));
+            e.DrawLine(myPen, new Point(x1, y1), new Point(x2, y2));
         }
         
         private void button1_Click(object sender, EventArgs e)
@@ -63,6 +143,7 @@ namespace scanner
         }
         void draw(tree cur, int x, int y,Graphics g)
         {
+            
             if (cur.type)
             {
                 drCircle(x, y, cur.text,g);
@@ -71,33 +152,42 @@ namespace scanner
             {
                 drrect(x, y, cur.text,g);
             }
+            int tempx = x;
             for (int i = 0; i < (cur.friends).Count; i++)
             {
-                drline(x+50+150*i,y+25,x+150+200*i,y+25,g);
-                draw(cur.friends[i], x + 150+200*i, y,g);
+
+                drline(tempx+50,y+25,tempx+400,y+25,g);
+                draw(cur.friends[i],tempx+400, y,g);
+                tempx += 400;
             }
             if (cur.children.Count == 1)
             {
+                dep++;
                 drline(x + 25, y + 50, x + 25, y + 150,g);
                 draw(cur.children[0], x , y + 150,g);
+                dep--;
             }
             else if (cur.children.Count == 2)
             {
-                drline(x + 25, y + 50, x - 75, y + 150,g);
-                draw(cur.children[0], x - 100, y + 150,g);
-                drline(x + 25, y + 50, x +125, y + 150,g);
-                draw(cur.children[1], x + 100, y + 150,g);
+                dep++;
+                drline(x + 25, y + 50, x - 50, y + 150,g);
+                draw(cur.children[0], x - 75, y + 150,g);
+                drline(x + 25, y + 50, x + 25, y + 150, g);
+                draw(cur.children[1], x, y + 150, g);
+                dep--;
             }
             else if (cur.children.Count == 3)
             {
+                dep++;
                 drline(x + 25, y + 50, x - 125, y + 150,g);
                 draw(cur.children[0], x -150, y + 150,g);
-                drline(x + 25, y + 50, x+25 , y + 150,g);
-                draw(cur.children[1], x , y + 150,g);
+                drline(x + 25, y + 50, x + 25, y + 150, g);
+                draw(cur.children[1], x, y + 150, g);
                 drline(x + 25, y + 50, x + 175, y + 150,g);
                 draw(cur.children[2], x + 150, y + 150,g);
-
+                dep--;
             }
+            
         }
         void SyntaxTree_Paint(object sender, PaintEventArgs e)
         {
