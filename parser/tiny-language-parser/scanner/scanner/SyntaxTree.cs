@@ -13,12 +13,14 @@ namespace scanner
     public partial class SyntaxTree : Form
     {
         tree f;
+        Panel p;
         public SyntaxTree(tree first)
         { 
             InitializeComponent();
-            this.DoubleBuffered = true;
+            //this.DoubleBuffered = true;
             this.AutoScroll = true;
             f = first;
+            pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
         }
         
         public void drCircle(int x,int y,string text, Graphics e)
@@ -97,12 +99,25 @@ namespace scanner
 
             }
         }
+        void SyntaxTree_Paint(object sender, PaintEventArgs e)
+        {
+            draw(f, 50, 20, e.Graphics);
+        }
+        /*
         protected override void OnPaint(PaintEventArgs e)
         {
+            
             this.AutoScroll = true;
             base.OnPaint(e);
             this.draw(f, 50, 20,e.Graphics);
+            
         }
+        protected override void OnScroll(ScrollEventArgs se)
+        {
+            base.OnScroll(se);
+            this.Validate();
+        }
+        */
         protected override CreateParams CreateParams
         {
             get
@@ -123,6 +138,16 @@ namespace scanner
             SelectMode b = new SelectMode();
             b.Show();
             Hide();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+        void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            
+            draw(f, 50, 20, e.Graphics);
         }
     }
 }
