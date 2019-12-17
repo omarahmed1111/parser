@@ -32,31 +32,30 @@ namespace scanner
             string f = textBox1.Text;
             try
             {
-                string output = f + "_output.txt";
-                writer = new StreamWriter(output);
+                
                 string file_text = File.ReadAllText(f+".txt");
                 sc = new parser(file_text);
-                int done=0;
-                if (done == 0)
+                tree first = sc.parse("");
+                if (!sc.error)
                 {
-                    label2.Text = "success";
-                    label2.ForeColor = Color.Green;
-                    out_no++;
+                    SyntaxTree syntaxTree = new SyntaxTree(first);
+                    syntaxTree.Show();
+                    Hide();
+
                 }
                 else
                 {
                     label2.Text = "syntax error";
                     label2.ForeColor = Color.Red;
                 }
-                writer.Close();
-               
+
 
             }
             catch
             {
                 label2.Text = "file does not exist";
                 label2.ForeColor = Color.Red;
-                writer.Close();
+                
             }
         }
 

@@ -117,5 +117,12 @@ namespace scanner
         {
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            SelectMode b = new SelectMode();
+            b.Show();
+            Hide();
+        }
     }
 }
