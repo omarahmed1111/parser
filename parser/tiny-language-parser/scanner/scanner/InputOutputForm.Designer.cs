@@ -72,7 +72,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 67);
             this.button1.TabIndex = 10;
-            this.button1.Text = "scan";
+            this.button1.Text = "Parse";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 

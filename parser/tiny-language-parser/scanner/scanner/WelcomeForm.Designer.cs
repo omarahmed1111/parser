@@ -54,9 +54,9 @@
             this.lbl_projectName.ForeColor = System.Drawing.Color.White;
             this.lbl_projectName.Location = new System.Drawing.Point(37, 90);
             this.lbl_projectName.Name = "lbl_projectName";
-            this.lbl_projectName.Size = new System.Drawing.Size(765, 86);
+            this.lbl_projectName.Size = new System.Drawing.Size(717, 86);
             this.lbl_projectName.TabIndex = 7;
-            this.lbl_projectName.Text = "Tiny Language Scanner";
+            this.lbl_projectName.Text = "Tiny Language Parser";
             this.lbl_projectName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_projectName.Click += new System.EventHandler(this.Lbl_projectName_Click);
             // 

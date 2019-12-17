@@ -18,8 +18,6 @@ namespace scanner
             InitializeComponent();
             this.DoubleBuffered = true;
             this.AutoScroll = true;
-            
-
             f = first;
         }
         
@@ -104,8 +102,6 @@ namespace scanner
             this.AutoScroll = true;
             base.OnPaint(e);
             this.draw(f, 50, 20,e.Graphics);
-            
-
         }
         protected override CreateParams CreateParams
         {
@@ -115,6 +111,11 @@ namespace scanner
                 cp.Style |= 0x00200000; // WS_VSCROLL
                 return cp;
             }
+        }
+
+        private void SyntaxTree_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
