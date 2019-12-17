@@ -22,8 +22,9 @@ namespace scanner
             tkns = new List<node>();
             for(int i = 0; i < text_file.Length; i++)
             {
-                if (text_file[i] == '\r') continue;
+                if (text_file[i] == '\r'|| text_file[i] == ' '|| text_file[i] == '\t') continue;
                 if (text_file[i] == '\n') {
+                    if (!traverse) continue;
                     traverse = false;
                     node temp = new node(token, value);
                     token = ""; value = "";
@@ -135,10 +136,21 @@ namespace scanner
                         error = true;
                     }//error
 
-                    if (match("SEMICOLON")) { }
-                    else {
-                        error = true;
-                    } //error
+                    
+                    if (tkns[idx].tknType == "SEMICOLON") {
+                        idx++;
+                        if (t == "IF" && tkns[idx].tknType != "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        else if (t == "" && idx != input_sz) { }
+                        else error = true;
+                    }
+                    else
+                    {
+                        if (t == "IF" && tkns[idx].tknType == "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        else if (t == "" && idx == input_sz) { }
+                        else error = true;
+                    }
 
                     if (begin)
                     {
@@ -155,18 +167,35 @@ namespace scanner
                 {
                     tree temp = new tree(false, "write");
                     idx++;
-                    if (match("IDENTIFIER"))
+                    if (idx >= input_sz)
                     {
-                        temp.children.Add(new tree(true, tkns[idx - 1].tknValue));
+                        error = true;
+                        //error
                     }
-                    else {
-                        error = true;
-                    }  //error
+                    tree temp3 = new tree(false, "");
+                    temp3 = exp();
 
-                    if (match("SEMICOLON")) { }
-                    else {
+                    if (idx >= input_sz)
+                    {
                         error = true;
-                    } //error
+                        //error
+                    }
+                    temp.children.Add(temp3);
+                    if (tkns[idx].tknType == "SEMICOLON")
+                    {
+                        idx++;
+                        if (t == "IF" && tkns[idx].tknType != "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        else if (t == "" && idx != input_sz) { }
+                        else error = true;
+                    }
+                    else
+                    {
+                        if (t == "IF" && tkns[idx].tknType == "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        else if (t == "" && idx == input_sz) { }
+                        else error = true;
+                    }
 
                     if (begin)
                     {
@@ -337,13 +366,21 @@ namespace scanner
                         error = true;
                         //error
                     }
-                    if (match("SEMICOLON"))
+                    if (tkns[idx].tknType == "SEMICOLON")
                     {
-                        temp.children.Add(temp2);
+                        idx++;
+                        if (t == "IF" && tkns[idx].tknType != "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        else if (t == "" && idx != input_sz) { }
+                        else error = true;
                     }
-                    else {
-                        error = true;
-                    }//error
+                    else
+                    {
+                        if (t == "IF" && tkns[idx].tknType == "END") { }
+                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        else if (t == "" && idx == input_sz) { }
+                        else error = true;
+                    }
 
                     if (begin)
                     {
@@ -359,9 +396,10 @@ namespace scanner
                 else
                 {
                     //error
-                    if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") break;
-                    else if (t == "IF" && tkns[idx].tknType == "END"|| tkns[idx].tknType == "ELSE") break;
-                    else    error = true;
+                    if (t == "" && idx == input_sz) break;
+                    else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") break;
+                    else if (t == "IF" && tkns[idx].tknType == "END") break;
+                    else error = true;
                     break;
                 }
             }
