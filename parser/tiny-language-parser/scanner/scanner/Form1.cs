@@ -26,7 +26,15 @@ namespace scanner
         {
 
         }
+        public bool check(tree cur)
+        {
 
+            if (cur.text == "") return true;
+            bool c = false;
+            for (int i = 0; i < cur.friends.Count; i++) c |= check(cur.friends[i]);
+            for (int i = 0; i < cur.children.Count; i++) c |= check(cur.children[i]);
+            return c;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             string f = textBox1.Text;
@@ -36,7 +44,8 @@ namespace scanner
                 string file_text = File.ReadAllText(f+".txt");
                 sc = new parser(file_text);
                 tree first = sc.parse("");
-                if (!sc.error)
+                bool valid = check(first);
+                if (!sc.error&&!valid)
                 {
                     SyntaxTree syntaxTree = new SyntaxTree(first);
                     syntaxTree.Show();
