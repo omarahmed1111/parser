@@ -54,7 +54,8 @@ namespace scanner
             temp = term();
             while (tkns[idx].tknType =="PLUS" || tkns[idx].tknType == "MINUS")
             {
-                newtemp.type = true; newtemp.text = tkns[idx].tknValue;
+                newtemp.type = true;
+                newtemp.text = tkns[idx].tknType + "\n" + tkns[idx].tknValue;
                 idx++;
                 
                 newtemp.children.Add(temp);
@@ -72,7 +73,7 @@ namespace scanner
             temp = factor();
             while(tkns[idx].tknType== "MULT" || tkns[idx].tknType == "DIV")
             {
-                newtemp.type = true; newtemp.text = tkns[idx].tknValue;
+                newtemp.type = true; newtemp.text = tkns[idx].tknType + "\n" + tkns[idx].tknValue;
                 idx++;
 
                 newtemp.children.Add(temp);
@@ -102,13 +103,13 @@ namespace scanner
             else if (tkns[idx].tknType == "NUMBER")
             {
                 temp.type = true;
-                temp.text = tkns[idx].tknValue;
+                temp.text = "CONST" + "\n" + tkns[idx].tknValue;
                 idx++;
             }
             else if(tkns[idx].tknType == "IDENTIFIER")
             {
                 temp.type = true;
-                temp.text = tkns[idx].tknValue;
+                temp.text = "ID" + "\n" + tkns[idx].tknValue;
                 idx++;
             }
             else
@@ -416,13 +417,13 @@ namespace scanner
             if (tkns[idx].tknType == "LESSTHAN")
             {
                 temp.type = true;
-                temp.text = tkns[idx].tknValue;
+                temp.text = tkns[idx].tknType + "\n" + tkns[idx].tknValue;
                 idx++;
             }
             else if (tkns[idx].tknType == "EQUAL")
             {
                 temp.type = true;
-                temp.text = tkns[idx].tknValue;
+                temp.text = tkns[idx].tknType + "\n" + tkns[idx].tknValue;
                 idx++;
             }
             else

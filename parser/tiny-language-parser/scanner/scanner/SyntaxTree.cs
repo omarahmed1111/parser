@@ -16,12 +16,42 @@ namespace scanner
         Panel p;
         List<Color> colors;
         int dep;
+        List<Point> drawn;
+        Pen penused()
+        {
+            Pen myPen;
+            if (dep == 0)
+            {
+                myPen = new Pen(Color.Red);
+            }
+            else if (dep == 1)
+            {
+                myPen = new Pen(Color.Blue);
+            }
+            else if (dep == 2)
+            {
+                myPen = new Pen(Color.Green);
+            }
+            else if (dep == 3)
+            {
+                myPen = new Pen(Color.Orange);
+            }
+            else if (dep == 4)
+            {
+                myPen = new Pen(Color.Tomato);
+            }
+            else
+            {
+                myPen = new Pen(Color.Violet);
+            }
+            return myPen;
+        }
         public SyntaxTree(tree first)
         { 
             InitializeComponent();
             //this.DoubleBuffered = true;
             colors = new List<Color>();
-            
+            drawn = new List<Point>();
             dep = 0;
             this.AutoScroll = true;
             f = first;
@@ -30,70 +60,19 @@ namespace scanner
         
         public void drCircle(int x,int y,string text, Graphics e)
         {
-            Pen myPen;
-            if (dep == 0)
-            {
-                myPen = new Pen(Color.Red);
-            }
-            else if (dep == 1)
-            {
-                myPen = new Pen(Color.Blue);
-            }
-            else if (dep == 2)
-            {
-                myPen = new Pen(Color.Green);
-            }
-            else if (dep == 3)
-            {
-                myPen = new Pen(Color.Orange);
-            }
-            else if (dep == 4)
-            {
-                myPen = new Pen(Color.Tomato);
-            }
-            else
-            {
-                myPen = new Pen(Color.Violet);
-            }
-            
-            
+            Pen myPen = penused();
             Pen mytextPen = new Pen(Color.Green);
             Font drawFont = new Font("Arial", 8);
             SolidBrush mySolidBrush = new SolidBrush(Color.Red);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-            e.DrawEllipse(myPen, x, y, 50, 50);
+            e.DrawEllipse(myPen, x, y, 80, 50);
             StringFormat drawFormat = new StringFormat();
-            e.DrawString(text, drawFont, drawBrush, x + 17, y + 10, drawFormat);
+            e.DrawString(text, drawFont, drawBrush, x + 5, y + 10, drawFormat);
             
         }
         public void drrect(int x, int y, string text, Graphics e)
         {
-            Pen myPen;
-            if (dep == 0)
-            {
-                myPen = new Pen(Color.Red);
-            }
-            else if (dep == 1)
-            {
-                myPen = new Pen(Color.Blue);
-            }
-            else if (dep == 2)
-            {
-                myPen = new Pen(Color.Green);
-            }
-            else if (dep == 3)
-            {
-                myPen = new Pen(Color.Orange);
-            }
-            else if (dep == 4)
-            {
-                myPen = new Pen(Color.Tomato);
-            }
-            else
-            {
-                myPen = new Pen(Color.Violet);
-            }
-
+            Pen myPen = penused();
             
             Pen mytextPen = new Pen(Color.Green);
             Font drawFont = new Font("Arial", 8);
@@ -105,31 +84,7 @@ namespace scanner
         }
         public void drline(int x1,int y1,int x2,int y2, Graphics e)
         {
-            Pen myPen;
-            if (dep == 0)
-            {
-                myPen = new Pen(Color.Red);
-            }
-            else if (dep == 1)
-            {
-                myPen = new Pen(Color.Blue);
-            }
-            else if (dep == 2)
-            {
-                myPen = new Pen(Color.Green);
-            }
-            else if (dep == 3)
-            {
-                myPen = new Pen(Color.Orange);
-            }
-            else if (dep == 4)
-            {
-                myPen = new Pen(Color.Tomato);
-            }
-            else
-            {
-                myPen = new Pen(Color.Violet);
-            }
+            Pen myPen = penused();
             Graphics myGraphics = base.CreateGraphics();
             
             SolidBrush drawBrush = new SolidBrush(Color.Black);
@@ -155,59 +110,200 @@ namespace scanner
             int tempx = x,tempy=y;
             for (int i = 0; i < (cur.friends).Count; i++)
             {
+                bool shift = false;
 
-                drline(tempx+50,tempy+25,tempx+400,tempy+75,g);
-                draw(cur.friends[i],tempx+400, tempy+50,g);
-                tempx += 400; tempy += 50;
+                for(int j=0; j < drawn.Count; j++)
+                {
+                    if (tempx + 400 == drawn[j].X && tempy == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(tempx + 250, tempy));
+                    drline(tempx + 50, tempy + 25, tempx + 250, tempy+25, g);
+                    draw(cur.friends[i], tempx + 250, tempy, g);
+                    tempx += 250;
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(tempx + 200, tempy));
+                    drline(tempx + 50, tempy + 25, tempx + 200, tempy + 25, g);
+                    draw(cur.friends[i], tempx + 200, tempy, g);
+                    
+                    tempx += 200;
+                }
             }
             if (cur.children.Count == 1)
             {
                 dep++;
-                drline(x + 25, y + 50, x + 25, y + 220,g);
-                draw(cur.children[0], x , y + 220,g);
+                bool shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x == drawn[j].X && y+220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x, y + 170));
+                    drline(x + 25, y + 50, x + 25, y + 170, g);
+                    draw(cur.children[0], x, y + 170, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x, y + 220));
+                    drline(x + 25, y + 50, x + 25, y + 220, g);
+                    draw(cur.children[0], x, y + 220, g);
+                    
+                }
+                
                 dep--;
             }
             else if (cur.children.Count == 2)
             {
                 dep++;
-                drline(x + 25, y + 50, x - 100, y + 220,g);
-                draw(cur.children[0], x - 125, y + 220,g);
-                drline(x + 25, y + 50, x + 150, y + 220, g);
-                draw(cur.children[1], x+125, y + 220, g);
+                bool shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x-100 == drawn[j].X && y+220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x - 100, y + 270));
+                    drline(x + 25, y + 50, x - 75, y + 270, g);
+                    draw(cur.children[0], x - 100, y + 270, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x - 100, y + 220));
+                    drline(x + 25, y + 50, x - 75, y + 220, g);
+                    draw(cur.children[0], x - 100, y + 220, g);
+                    
+                }
+
+
+                shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x+100 == drawn[j].X && y+220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x + 100, y + 220));
+                    drline(x + 25, y + 50, x + 125, y + 220, g);
+                    draw(cur.children[1], x + 100, y + 220, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x + 100, y + 220));
+                    drline(x + 25, y + 50, x + 125, y + 220, g);
+                    draw(cur.children[1], x + 100, y + 220, g);
+                    
+                }
+                
                 dep--;
             }
             else if (cur.children.Count == 3)
             {
                 dep++;
-                drline(x + 25, y + 50, x - 125, y + 220,g);
-                draw(cur.children[0], x -150, y + 220,g);
-                drline(x + 25, y + 50, x + 25, y + 220, g);
-                draw(cur.children[1], x, y + 220, g);
-                drline(x + 25, y + 50, x + 175, y + 220,g);
-                draw(cur.children[2], x + 150, y + 220,g);
+                bool shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x - 150 == drawn[j].X && y + 220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x - 150, y + 170));
+                    drline(x + 25, y + 50, x - 125, y + 170, g);
+                    draw(cur.children[0], x - 150, y + 170, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x - 150, y + 220));
+                    drline(x + 25, y + 50, x - 125, y + 220, g);
+                    draw(cur.children[0], x - 150, y + 220, g);
+                    
+                }
+
+                shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x == drawn[j].X && y + 220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x, y + 170));
+                    drline(x + 25, y + 50, x + 25, y + 170, g);
+                    draw(cur.children[1], x, y + 170, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x, y + 220));
+                    drline(x + 25, y + 50, x + 25, y + 220, g);
+                    draw(cur.children[1], x, y + 220, g);
+                    
+                }
+
+                shift = false;
+                for (int j = 0; j < drawn.Count; j++)
+                {
+                    if (x+150 == drawn[j].X && y + 220 == drawn[j].Y)
+                    {
+                        shift = true;
+                        break;
+                    }
+                }
+                if (shift)
+                {
+                    drawn.Add(new Point(x + 150, y + 170));
+                    drline(x + 25, y + 50, x + 175, y + 170, g);
+                    draw(cur.children[2], x + 150, y + 170, g);
+                    
+                }
+                else
+                {
+                    drawn.Add(new Point(x + 150, y + 220));
+                    drline(x + 25, y + 50, x + 175, y + 220, g);
+                    draw(cur.children[2], x + 150, y + 220, g);
+                    
+                }
+                
                 dep--;
             }
             
         }
         void SyntaxTree_Paint(object sender, PaintEventArgs e)
         {
-            draw(f, 50, 20, e.Graphics);
+            draw(f, 1000, 1000, e.Graphics);
         }
-        /*
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            
-            this.AutoScroll = true;
-            base.OnPaint(e);
-            this.draw(f, 50, 20,e.Graphics);
-            
-        }
-        protected override void OnScroll(ScrollEventArgs se)
-        {
-            base.OnScroll(se);
-            this.Validate();
-        }
-        */
+        
         protected override CreateParams CreateParams
         {
             get
@@ -237,7 +333,7 @@ namespace scanner
         void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             
-            draw(f, 50, 20, e.Graphics);
+            draw(f, 500, 100, e.Graphics);
         }
     }
 }
