@@ -152,39 +152,39 @@ namespace scanner
             {
                 drrect(x, y, cur.text,g);
             }
-            int tempx = x;
+            int tempx = x,tempy=y;
             for (int i = 0; i < (cur.friends).Count; i++)
             {
 
-                drline(tempx+50,y+25,tempx+400,y+25,g);
-                draw(cur.friends[i],tempx+400, y,g);
-                tempx += 400;
+                drline(tempx+50,tempy+25,tempx+400,tempy+75,g);
+                draw(cur.friends[i],tempx+400, tempy+50,g);
+                tempx += 400; tempy += 50;
             }
             if (cur.children.Count == 1)
             {
                 dep++;
-                drline(x + 25, y + 50, x + 25, y + 150,g);
-                draw(cur.children[0], x , y + 150,g);
+                drline(x + 25, y + 50, x + 25, y + 220,g);
+                draw(cur.children[0], x , y + 220,g);
                 dep--;
             }
             else if (cur.children.Count == 2)
             {
                 dep++;
-                drline(x + 25, y + 50, x - 50, y + 150,g);
-                draw(cur.children[0], x - 75, y + 150,g);
-                drline(x + 25, y + 50, x + 25, y + 150, g);
-                draw(cur.children[1], x, y + 150, g);
+                drline(x + 25, y + 50, x - 100, y + 220,g);
+                draw(cur.children[0], x - 125, y + 220,g);
+                drline(x + 25, y + 50, x + 150, y + 220, g);
+                draw(cur.children[1], x+125, y + 220, g);
                 dep--;
             }
             else if (cur.children.Count == 3)
             {
                 dep++;
-                drline(x + 25, y + 50, x - 125, y + 150,g);
-                draw(cur.children[0], x -150, y + 150,g);
-                drline(x + 25, y + 50, x + 25, y + 150, g);
-                draw(cur.children[1], x, y + 150, g);
-                drline(x + 25, y + 50, x + 175, y + 150,g);
-                draw(cur.children[2], x + 150, y + 150,g);
+                drline(x + 25, y + 50, x - 125, y + 220,g);
+                draw(cur.children[0], x -150, y + 220,g);
+                drline(x + 25, y + 50, x + 25, y + 220, g);
+                draw(cur.children[1], x, y + 220, g);
+                drline(x + 25, y + 50, x + 175, y + 220,g);
+                draw(cur.children[2], x + 150, y + 220,g);
                 dep--;
             }
             
