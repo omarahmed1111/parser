@@ -65,7 +65,7 @@ namespace scanner
             Font drawFont = new Font("Arial", 8);
             SolidBrush mySolidBrush = new SolidBrush(Color.Red);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-            e.DrawEllipse(myPen, x, y, 80, 50);
+            e.DrawEllipse(myPen, x, y, 50, 50);
             StringFormat drawFormat = new StringFormat();
             e.DrawString(text, drawFont, drawBrush, x + 5, y + 10, drawFormat);
             
