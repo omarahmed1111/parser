@@ -52,7 +52,7 @@ namespace scanner
         {
             tree temp = new tree(false, ""), newtemp = new tree(false, "");
             temp = term();
-            while (tkns[idx].tknType =="PLUS" || tkns[idx].tknType == "MINUS")
+            while (idx<input_sz && (tkns[idx].tknType =="PLUS" || tkns[idx].tknType == "MINUS"))
             {
                 newtemp.type = true;
                 newtemp.text = "OP" + "\n" + tkns[idx].tknValue;
@@ -71,7 +71,7 @@ namespace scanner
         {
             tree temp = new tree(false, ""), newtemp = new tree(false, "");
             temp = factor();
-            while(tkns[idx].tknType== "MULT" || tkns[idx].tknType == "DIV")
+            while(idx<input_sz &&( tkns[idx].tknType== "MULT" || tkns[idx].tknType == "DIV"))
             {
                 newtemp.type = true; newtemp.text = "OP" + "\n" + tkns[idx].tknValue;
                 idx++;
@@ -135,10 +135,11 @@ namespace scanner
                     }
                     else {
                         error = true;
+                        break;
                     }//error
-
                     
-                    if (tkns[idx].tknType == "SEMICOLON") {
+                    
+                    if (idx<input_sz &&tkns[idx].tknType == "SEMICOLON") {
                         idx++;
                         if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
                         else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
@@ -171,18 +172,15 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp3 = new tree(false, "");
                     temp3 = exp();
 
-                    if (idx >= input_sz)
-                    {
-                        error = true;
-                        //error
-                    }
+                    
                     temp.children.Add(temp3);
-                    if (tkns[idx].tknType == "SEMICOLON")
+                    if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
                         if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
@@ -215,6 +213,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp2 = new tree(false, "");
@@ -227,11 +226,13 @@ namespace scanner
                     }
                     else {
                         error = true;
+                        break;
                     } //error
                     //condition of until
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp3 = new tree(false, "");
@@ -240,6 +241,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp4 = new tree(false, "");
@@ -248,6 +250,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp5 = new tree(false, "");
@@ -262,6 +265,7 @@ namespace scanner
                     }
                     else {
                         error = true;
+                        break;
                     }//error
                     
                     if (begin)
@@ -281,6 +285,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
 
@@ -290,6 +295,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp3 = new tree(false, "");
@@ -298,6 +304,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
                     tree temp4 = new tree(false, "");
@@ -307,6 +314,7 @@ namespace scanner
                     if (match("THEN")) { }
                     else {
                         error = true;
+                        break;
                     }//error
 
                     tree temp5 = new tree(false, "");
@@ -330,6 +338,7 @@ namespace scanner
                     }
                     else {
                         error = true;
+                        break;
                     }//error
                     if (begin)
                     {
@@ -349,6 +358,7 @@ namespace scanner
                     if (idx >= input_sz)
                     {
                         error = true;
+                        break;
                         //error
                     }
 
@@ -359,17 +369,14 @@ namespace scanner
                     }
                     else {
                         error = true;
+                        break;
                     }//error
 
                     tree temp2 = new tree(false, "");
                     temp2 = exp();
-                    if (idx >= input_sz)
-                    {
-                        error = true;
-                        //error
-                    }
+                    
                     temp.children.Add(temp2);
-                    if (tkns[idx].tknType == "SEMICOLON")
+                    if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
                         if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
