@@ -12,3 +12,16 @@ F:\github\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.W
 F:\github\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.csproj.GenerateResource.cache
 F:\github\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.exe
 F:\github\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.pdb
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\bin\Debug\scanner.exe.config
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.exe
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.pdb
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.Form1.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.InputOutputForm.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.Output.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.Properties.Resources.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.SelectMode.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.SyntaxTree.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.WelcomeForm.resources
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.csproj.GenerateResource.Cache
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\bin\Debug\scanner.exe
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\bin\Debug\scanner.pdb

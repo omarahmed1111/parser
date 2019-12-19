@@ -16,14 +16,15 @@ namespace scanner
         {
             idx = 0;
             error = false;
-            string value="";
-            string token="";
+            string value = "";
+            string token = "";
             bool traverse = false;
             tkns = new List<node>();
-            for(int i = 0; i < text_file.Length; i++)
+            for (int i = 0; i < text_file.Length; i++)
             {
-                if (text_file[i] == '\r'|| text_file[i] == ' '|| text_file[i] == '\t') continue;
-                if (text_file[i] == '\n') {
+                if (text_file[i] == '\r' || text_file[i] == ' ' || text_file[i] == '\t') continue;
+                if (text_file[i] == '\n')
+                {
                     if (!traverse) continue;
                     traverse = false;
                     node temp = new node(token, value);
@@ -51,62 +52,108 @@ namespace scanner
         public tree exp()
         {
             tree temp = new tree(false, ""), newtemp = new tree(false, "");
+            tree temp2 = new tree(false, "");
+            tree start = new tree(false, "");
+            bool v = false;
             temp = term();
-            while (idx<input_sz && (tkns[idx].tknType =="PLUS" || tkns[idx].tknType == "MINUS"))
+            while (idx < input_sz && (tkns[idx].tknType == "PLUS" || tkns[idx].tknType == "MINUS"))
             {
+                newtemp = new tree(false, "");
                 newtemp.type = true;
                 newtemp.text = "OP" + "\n" + tkns[idx].tknValue;
                 idx++;
-                
-                newtemp.children.Add(temp);
-                tree temp2 = new tree(false, "");
-                temp2 = term();
-                newtemp.children.Add(temp2);
-                temp = newtemp;
-            }
+                if (!v)
+                {
+                    v = true;
 
-            return temp;
+                    newtemp.children.Add(temp);
+
+
+                    start = newtemp;
+                }
+                else
+                {
+                    temp2.children.Add(newtemp);
+                    newtemp.children.Add(temp);
+                }
+
+                temp2 = newtemp;
+
+                temp = term();
+
+            }
+            if (!v) return temp;
+            else
+            {
+                newtemp.children.Add(temp);
+                return start;
+            }
         }
+
         public tree term()
         {
             tree temp = new tree(false, ""), newtemp = new tree(false, "");
+            tree temp2 = new tree(false, "");
+            tree start = new tree(false, "");
+            bool v = false;
             temp = factor();
-            while(idx<input_sz &&( tkns[idx].tknType== "MULT" || tkns[idx].tknType == "DIV"))
+            while (idx < input_sz && (tkns[idx].tknType == "MULT" || tkns[idx].tknType == "DIV"))
             {
-                newtemp.type = true; newtemp.text = "OP" + "\n" + tkns[idx].tknValue;
+                newtemp = new tree(false, "");
+                newtemp.type = true;
+                newtemp.text = "OP" + "\n" + tkns[idx].tknValue;
                 idx++;
+                if (!v)
+                {
+                    v = true;
 
-                newtemp.children.Add(temp);
-                tree temp2 = new tree(false, "");
-                temp2 = factor();
-                newtemp.children.Add(temp2);
-                temp = newtemp;
+                    newtemp.children.Add(temp);
+
+                    start = newtemp;
+                }
+                else
+                {
+                    temp2.children.Add(newtemp);
+                    newtemp.children.Add(temp);
+                }
+
+                temp2 = newtemp;
+
+                temp = factor();
+
             }
-            return temp;
+            if (!v) return temp;
+            else
+            {
+                newtemp.children.Add(temp);
+                return start;
+            }
         }
         public tree factor()
         {
-            tree temp = new tree(false,"");
-            if (tkns[idx].tknType == "OPENBRACKET")
+            tree temp = new tree(false, "");
+            if (idx < input_sz && tkns[idx].tknType == "OPENBRACKET")
             {
                 if (match("OPENBRACKET")) { }
-                else {
+                else
+                {
                     error = true;
                 }//error
                 temp = exp();
                 if (match("CLOSEDBRACKET")) { }
-                else {
+                else
+                {
                     error = true;
                 }//error
 
             }
-            else if (tkns[idx].tknType == "NUMBER")
+            else if (idx < input_sz && tkns[idx].tknType == "NUMBER")
             {
                 temp.type = true;
                 temp.text = "CONST" + "\n" + tkns[idx].tknValue;
                 idx++;
             }
-            else if(tkns[idx].tknType == "IDENTIFIER")
+            else if (idx < input_sz && tkns[idx].tknType == "IDENTIFIER")
             {
                 temp.type = true;
                 temp.text = "ID" + "\n" + tkns[idx].tknValue;
@@ -119,9 +166,10 @@ namespace scanner
 
         public tree parse(string t)
         {
-            tree first = new tree(false,"");
+            tree first = new tree(false, "");
             bool begin = true;
-            while (true) {
+            while (true)
+            {
                 if (idx >= input_sz) break;
                 if (tkns[idx].tknType == "READ")
                 {
@@ -133,13 +181,15 @@ namespace scanner
                     {
                         value += tkns[idx - 1].tknValue;
                     }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     }//error
-                    
-                    
-                    if (idx<input_sz &&tkns[idx].tknType == "SEMICOLON") {
+
+
+                    if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
+                    {
                         idx++;
                         if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
                         else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
@@ -148,7 +198,7 @@ namespace scanner
                     }
                     else
                     {
-                        if (t == "IF" &&( tkns[idx].tknType == "END"||tkns[idx].tknType=="ELSE")) { }
+                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
                         else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
@@ -178,7 +228,7 @@ namespace scanner
                     tree temp3 = new tree(false, "");
                     temp3 = exp();
 
-                    
+
                     temp.children.Add(temp3);
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
@@ -206,7 +256,7 @@ namespace scanner
                         first.friends.Add(temp);
                     }
                 }
-                else if(tkns[idx].tknType == "REPEAT")
+                else if (tkns[idx].tknType == "REPEAT")
                 {
                     tree temp = new tree(false, "repeat");
                     idx++;
@@ -219,12 +269,13 @@ namespace scanner
                     tree temp2 = new tree(false, "");
                     temp2 = parse("REPEAT");
                     temp.children.Add(temp2);
-                    
+
                     if (match("UNTIL"))
                     {
-                        
+
                     }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     } //error
@@ -237,7 +288,7 @@ namespace scanner
                     }
                     tree temp3 = new tree(false, "");
                     temp3 = exp();
-                    
+
                     if (idx >= input_sz)
                     {
                         error = true;
@@ -246,7 +297,7 @@ namespace scanner
                     }
                     tree temp4 = new tree(false, "");
                     temp4 = cmpOP();
-                   
+
                     if (idx >= input_sz)
                     {
                         error = true;
@@ -255,19 +306,20 @@ namespace scanner
                     }
                     tree temp5 = new tree(false, "");
                     temp5 = exp();
-                    
+
                     if (match("SEMICOLON"))
                     {
                         temp4.children.Add(temp3);
                         temp4.children.Add(temp5);
                         temp.children.Add(temp4);
-                        
+
                     }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     }//error
-                    
+
                     if (begin)
                     {
                         begin = false;
@@ -278,7 +330,7 @@ namespace scanner
                         first.friends.Add(temp);
                     }
                 }
-                else if(tkns[idx].tknType == "IF")
+                else if (tkns[idx].tknType == "IF")
                 {
                     tree temp = new tree(false, "if");
                     idx++;
@@ -291,7 +343,7 @@ namespace scanner
 
                     tree temp2 = new tree(false, "");
                     temp2 = exp();
-                    
+
                     if (idx >= input_sz)
                     {
                         error = true;
@@ -300,7 +352,7 @@ namespace scanner
                     }
                     tree temp3 = new tree(false, "");
                     temp3 = cmpOP();
-                    
+
                     if (idx >= input_sz)
                     {
                         error = true;
@@ -309,10 +361,11 @@ namespace scanner
                     }
                     tree temp4 = new tree(false, "");
                     temp4 = exp();
-                    
+
 
                     if (match("THEN")) { }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     }//error
@@ -329,14 +382,16 @@ namespace scanner
                         temp6 = parse("IF");
                     }
 
-                    if (match("END")) {
+                    if (match("END"))
+                    {
                         temp3.children.Add(temp2);
                         temp3.children.Add(temp4);
                         temp.children.Add(temp3);
                         temp.children.Add(temp5);
                         if (iselse) temp.children.Add(temp6);
                     }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     }//error
@@ -350,7 +405,7 @@ namespace scanner
                         first.friends.Add(temp);
                     }
                 }
-                else if(tkns[idx].tknType == "IDENTIFIER")
+                else if (tkns[idx].tknType == "IDENTIFIER")
                 {
                     tree temp = new tree(false, "");
                     string value = tkns[idx].tknValue;
@@ -367,14 +422,15 @@ namespace scanner
                         value = "assign \n" + value;
                         temp.text = value;
                     }
-                    else {
+                    else
+                    {
                         error = true;
                         break;
                     }//error
 
                     tree temp2 = new tree(false, "");
                     temp2 = exp();
-                    
+
                     temp.children.Add(temp2);
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
@@ -396,7 +452,7 @@ namespace scanner
                     {
                         begin = false;
                         first = temp;
-                        
+
                     }
                     else
                     {
@@ -415,9 +471,9 @@ namespace scanner
                 }
             }
             return first;
-            
+
         }
-       
+
         public tree cmpOP()
         {
             tree temp = new tree(false, "");
@@ -444,7 +500,7 @@ namespace scanner
             if (idx >= input_sz)
             {
                 return false;
-                
+
             }
             else if (tkns[idx].tknType == token)
             {
@@ -455,7 +511,7 @@ namespace scanner
             {
                 error = true;
                 return false;
-                
+
             }
         }
     }
