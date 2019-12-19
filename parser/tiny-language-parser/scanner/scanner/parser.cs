@@ -306,19 +306,25 @@ namespace scanner
                     }
                     tree temp5 = new tree(false, "");
                     temp5 = exp();
-
-                    if (match("SEMICOLON"))
+                    if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
-                        temp4.children.Add(temp3);
-                        temp4.children.Add(temp5);
-                        temp.children.Add(temp4);
-
+                        idx++;
+                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        else if (t == "" && idx != input_sz) { }
+                        else error = true;
                     }
                     else
                     {
-                        error = true;
-                        break;
-                    }//error
+                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        else if (t == "" && idx == input_sz) { }
+                        else error = true;
+                    }
+                    temp4.children.Add(temp3);
+                    temp4.children.Add(temp5);
+                    temp.children.Add(temp4);
+
 
                     if (begin)
                     {
@@ -395,6 +401,21 @@ namespace scanner
                         error = true;
                         break;
                     }//error
+                    if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
+                    {
+                        idx++;
+                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        else if (t == "" && idx != input_sz) { }
+                        else error = true;
+                    }
+                    else
+                    {
+                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        else if (t == "" && idx == input_sz) { }
+                        else error = true;
+                    }
                     if (begin)
                     {
                         begin = false;

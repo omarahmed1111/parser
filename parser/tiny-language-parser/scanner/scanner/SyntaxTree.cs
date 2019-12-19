@@ -70,7 +70,7 @@ namespace scanner
             f = first;
             depth_est(f,1);
             pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
-            this.Validate();
+           
         }
         
         public void drCircle(int x,int y,string text, Graphics e)

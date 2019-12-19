@@ -25,3 +25,4 @@ D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\s
 D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.csproj.GenerateResource.Cache
 D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\bin\Debug\scanner.exe
 D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\bin\Debug\scanner.pdb
+D:\parser\parser2\parser\parser\tiny-language-parser\scanner\scanner\obj\Debug\scanner.csprojResolveAssemblyReference.cache
