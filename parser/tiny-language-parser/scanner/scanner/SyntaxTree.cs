@@ -69,6 +69,7 @@ namespace scanner
             //this.AutoScroll = true;
             f = first;
             depth_est(f,1);
+            hiii();
             pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
            
         }
@@ -125,6 +126,22 @@ namespace scanner
             for (int i = 0; i < cur.children.Count(); i++)
             {
                 depth_est(cur.children[i], l+1);
+            }
+        }
+
+        public void hiii()
+        {
+            for (int i = 0; i <= max_level; i++)
+            {
+                if (maxato[i] > moo)
+                {
+                    moo = maxato[i];
+                }
+            }
+            moo = 100 * moo;
+            for (int i = 1; i <= max_level; i++)
+            {
+                TTT[i] = moo / (maxato[i]);
             }
         }
 
@@ -190,16 +207,7 @@ namespace scanner
 
         }
         void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            for (int i = 0; i <= max_level; i++) {
-                if (maxato[i] > moo) {
-                    moo = maxato[i];
-                }
-            }
-            moo = 100 * moo;
-            for (int i = 1; i <= max_level; i++) {
-                TTT[i] = moo / (maxato[i]);
-            }  
+        {  
             draw2(f, e.Graphics);
             //draw(f, 100, 100, e.Graphics);
         }
