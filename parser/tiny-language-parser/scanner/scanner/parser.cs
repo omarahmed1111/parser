@@ -381,7 +381,7 @@ namespace scanner
 
                     tree temp6 = new tree(false, "");
                     bool iselse = false;
-                    if (tkns[idx].tknType == "ELSE")
+                    if (idx<input_sz&& tkns[idx].tknType == "ELSE")
                     {
                         idx++;
                         iselse = true;
