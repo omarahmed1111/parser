@@ -191,15 +191,15 @@ namespace scanner
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
-                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
                         else if (t == "" && idx != input_sz) { }
                         else error = true;
                     }
                     else
                     {
-                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
                     }
@@ -233,15 +233,15 @@ namespace scanner
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
-                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
                         else if (t == "" && idx != input_sz) { }
                         else error = true;
                     }
                     else
                     {
-                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
                     }
@@ -309,15 +309,15 @@ namespace scanner
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
-                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
                         else if (t == "" && idx != input_sz) { }
                         else error = true;
                     }
                     else
                     {
-                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
                     }
@@ -404,15 +404,15 @@ namespace scanner
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
-                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
                         else if (t == "" && idx != input_sz) { }
                         else error = true;
                     }
                     else
                     {
-                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
                     }
@@ -456,15 +456,15 @@ namespace scanner
                     if (idx < input_sz && tkns[idx].tknType == "SEMICOLON")
                     {
                         idx++;
-                        if (t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
+                        if (idx < input_sz && t == "IF" && (tkns[idx].tknType != "END" && tkns[idx].tknType != "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType != "UNTIL") { }
                         else if (t == "" && idx != input_sz) { }
                         else error = true;
                     }
                     else
                     {
-                        if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
-                        else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
+                        if (idx<input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) { }
+                        else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") { }
                         else if (t == "" && idx == input_sz) { }
                         else error = true;
                     }
@@ -485,8 +485,8 @@ namespace scanner
                 {
                     //error
                     if (t == "" && idx == input_sz) break;
-                    else if (t == "REPEAT" && tkns[idx].tknType == "UNTIL") break;
-                    else if (t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) break;
+                    else if (idx < input_sz && t == "REPEAT" && tkns[idx].tknType == "UNTIL") break;
+                    else if (idx < input_sz && t == "IF" && (tkns[idx].tknType == "END" || tkns[idx].tknType == "ELSE")) break;
                     else error = true;
                     break;
                 }
