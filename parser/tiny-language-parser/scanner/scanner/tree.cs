@@ -11,6 +11,9 @@ namespace scanner
     {
         public string text;
         public bool type;
+        public int level;
+        public int x;
+        public int y;
         public List<tree> children;
         public List<tree> friends;
         public tree(bool ty,string value)

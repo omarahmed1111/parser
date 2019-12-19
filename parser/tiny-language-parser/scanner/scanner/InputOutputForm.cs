@@ -22,12 +22,14 @@ namespace scanner
         }
         public bool check(tree cur)
         {
-
+            /*
             if (cur.text == "") return true;
             bool c = false;
             for (int i = 0; i < cur.friends.Count; i++) c |= check(cur.friends[i]);
             for (int i = 0; i < cur.children.Count; i++) c |= check(cur.children[i]);
             return c;
+            */
+            return false;
         }
         private void Button1_Click(object sender, EventArgs e)
         {

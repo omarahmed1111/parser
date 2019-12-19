@@ -13,10 +13,15 @@ namespace scanner
     public partial class SyntaxTree : Form
     {
         tree f;
+        public int max_level = 0;
         Panel p;
         List<Color> colors;
         int dep;
+        int moo = 0;
         List<Point> drawn;
+        List<int> max_x;
+        List<int> maxato;
+        List<int> TTT;
         Pen penused()
         {
             Pen myPen;
@@ -52,10 +57,20 @@ namespace scanner
             //this.DoubleBuffered = true;
             colors = new List<Color>();
             drawn = new List<Point>();
+            max_x = new List<int>();
+            maxato = new List<int>();
+            TTT = new List<int>();
+            for (int i = 0; i < 200; i++) {
+                max_x.Add(50);
+                maxato.Add(0);
+                TTT.Add(0);
+            }
             dep = 0;
-            this.AutoScroll = true;
+            //this.AutoScroll = true;
             f = first;
+            depth_est(f,1);
             pictureBox1.Paint += new PaintEventHandler(pictureBox1_Paint);
+            this.Validate();
         }
         
         public void drCircle(int x,int y,string text, Graphics e)
@@ -96,214 +111,58 @@ namespace scanner
             
             
         }
-        void draw(tree cur, int x, int y,Graphics g)
-        {
-            
+
+        public void depth_est(tree cur,int l) {
+            cur.level = l;
+            if (max_level < l) {
+                max_level = l;
+            }
+            maxato[l]++;
+            cur.y = l * 110 -100 ;
+            for (int i = 0; i < cur.friends.Count(); i++) {
+                depth_est(cur.friends[i], l);
+            }
+            for (int i = 0; i < cur.children.Count(); i++)
+            {
+                depth_est(cur.children[i], l+1);
+            }
+        }
+
+        void draw2(tree cur, Graphics g) {
+            max_x[cur.level] = max_x[cur.level] + TTT[cur.level];
+            cur.x = max_x[cur.level];
             if (cur.type)
             {
-                drCircle(x, y, cur.text,g);
+                drCircle(cur.x, cur.y, cur.text, g);
             }
             else
             {
-                drrect(x, y, cur.text,g);
+                drrect(cur.x, cur.y, cur.text, g);
             }
-            int tempx = x,tempy=y;
+            for (int i = 0; i < (cur.children).Count; i++)
+            {
+                draw2(cur.children[i], g);
+                drline(cur.x + 25, cur.y + 50, cur.children[i].x + 25, cur.children[i].y, g);
+            }
             for (int i = 0; i < (cur.friends).Count; i++)
             {
-                bool shift = false;
-
-                for(int j=0; j < drawn.Count; j++)
+                draw2(cur.friends[i], g);
+                if (i == 0)
                 {
-                    if (tempx + 400 == drawn[j].X && tempy == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
+                    drline(cur.x + 50, cur.y + 25, cur.friends[i].x, cur.y + 25, g);
                 }
-                if (shift)
-                {
-                    drawn.Add(new Point(tempx + 250, tempy));
-                    drline(tempx + 50, tempy + 25, tempx + 250, tempy+25, g);
-                    draw(cur.friends[i], tempx + 250, tempy, g);
-                    tempx += 250;
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(tempx + 200, tempy));
-                    drline(tempx + 50, tempy + 25, tempx + 200, tempy + 25, g);
-                    draw(cur.friends[i], tempx + 200, tempy, g);
-                    
-                    tempx += 200;
+                else {
+                    drline(cur.friends[i-1].x + 50, cur.y + 25, cur.friends[i].x, cur.y + 25, g);
                 }
             }
-            if (cur.children.Count == 1)
-            {
-                dep++;
-                bool shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x == drawn[j].X && y+220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x, y + 170));
-                    drline(x + 25, y + 50, x + 25, y + 170, g);
-                    draw(cur.children[0], x, y + 170, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x, y + 220));
-                    drline(x + 25, y + 50, x + 25, y + 220, g);
-                    draw(cur.children[0], x, y + 220, g);
-                    
-                }
-                
-                dep--;
-            }
-            else if (cur.children.Count == 2)
-            {
-                dep++;
-                bool shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x-100 == drawn[j].X && y+220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x - 100, y + 270));
-                    drline(x + 25, y + 50, x - 75, y + 270, g);
-                    draw(cur.children[0], x - 100, y + 270, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x - 100, y + 220));
-                    drline(x + 25, y + 50, x - 75, y + 220, g);
-                    draw(cur.children[0], x - 100, y + 220, g);
-                    
-                }
-
-
-                shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x+100 == drawn[j].X && y+220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x + 100, y + 220));
-                    drline(x + 25, y + 50, x + 125, y + 220, g);
-                    draw(cur.children[1], x + 100, y + 220, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x + 100, y + 220));
-                    drline(x + 25, y + 50, x + 125, y + 220, g);
-                    draw(cur.children[1], x + 100, y + 220, g);
-                    
-                }
-                
-                dep--;
-            }
-            else if (cur.children.Count == 3)
-            {
-                dep++;
-                bool shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x - 150 == drawn[j].X && y + 220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x - 150, y + 170));
-                    drline(x + 25, y + 50, x - 125, y + 170, g);
-                    draw(cur.children[0], x - 150, y + 170, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x - 150, y + 220));
-                    drline(x + 25, y + 50, x - 125, y + 220, g);
-                    draw(cur.children[0], x - 150, y + 220, g);
-                    
-                }
-
-                shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x == drawn[j].X && y + 220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x, y + 170));
-                    drline(x + 25, y + 50, x + 25, y + 170, g);
-                    draw(cur.children[1], x, y + 170, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x, y + 220));
-                    drline(x + 25, y + 50, x + 25, y + 220, g);
-                    draw(cur.children[1], x, y + 220, g);
-                    
-                }
-
-                shift = false;
-                for (int j = 0; j < drawn.Count; j++)
-                {
-                    if (x+150 == drawn[j].X && y + 220 == drawn[j].Y)
-                    {
-                        shift = true;
-                        break;
-                    }
-                }
-                if (shift)
-                {
-                    drawn.Add(new Point(x + 150, y + 170));
-                    drline(x + 25, y + 50, x + 175, y + 170, g);
-                    draw(cur.children[2], x + 150, y + 170, g);
-                    
-                }
-                else
-                {
-                    drawn.Add(new Point(x + 150, y + 220));
-                    drline(x + 25, y + 50, x + 175, y + 220, g);
-                    draw(cur.children[2], x + 150, y + 220, g);
-                    
-                }
-                
-                dep--;
-            }
-            
         }
+
         void SyntaxTree_Paint(object sender, PaintEventArgs e)
         {
-            draw(f, 1000, 1000, e.Graphics);
+            ////pictureBox1_Paint(sender, e);
+
         }
-        
+
         protected override CreateParams CreateParams
         {
             get
@@ -332,8 +191,17 @@ namespace scanner
         }
         void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            
-            draw(f, 500, 100, e.Graphics);
+            for (int i = 0; i <= max_level; i++) {
+                if (maxato[i] > moo) {
+                    moo = maxato[i];
+                }
+            }
+            moo = 100 * moo;
+            for (int i = 1; i <= max_level; i++) {
+                TTT[i] = moo / (maxato[i]);
+            }  
+            draw2(f, e.Graphics);
+            //draw(f, 100, 100, e.Graphics);
         }
     }
 }
