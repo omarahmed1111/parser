@@ -54,7 +54,7 @@ namespace scanner
         public SyntaxTree(tree first)
         { 
             InitializeComponent();
-            //this.DoubleBuffered = true;
+            this.DoubleBuffered = true;
             colors = new List<Color>();
             drawn = new List<Point>();
             max_x = new List<int>();
@@ -119,7 +119,7 @@ namespace scanner
                 max_level = l;
             }
             maxato[l]++;
-            cur.y = l * 110 -100 ;
+            cur.y = l * 110 -20 ;
             for (int i = 0; i < cur.friends.Count(); i++) {
                 depth_est(cur.friends[i], l);
             }
@@ -145,9 +145,15 @@ namespace scanner
             }
         }
 
-        void draw2(tree cur, Graphics g) {
+        void draw2(tree cur, Graphics g,bool v) {
             max_x[cur.level] = max_x[cur.level] + TTT[cur.level];
             cur.x = max_x[cur.level];
+            if (v)
+            {
+                v = false;
+                cur.x = 100;
+                cur.y = 100;
+            }
             if (cur.type)
             {
                 drCircle(cur.x, cur.y, cur.text, g);
@@ -158,12 +164,12 @@ namespace scanner
             }
             for (int i = 0; i < (cur.children).Count; i++)
             {
-                draw2(cur.children[i], g);
+                draw2(cur.children[i], g,v);
                 drline(cur.x + 25, cur.y + 50, cur.children[i].x + 25, cur.children[i].y, g);
             }
             for (int i = 0; i < (cur.friends).Count; i++)
             {
-                draw2(cur.friends[i], g);
+                draw2(cur.friends[i], g,v);
                 if (i == 0)
                 {
                     drline(cur.x + 50, cur.y + 25, cur.friends[i].x, cur.y + 25, g);
@@ -207,8 +213,24 @@ namespace scanner
 
         }
         void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {  
-            draw2(f, e.Graphics);
+        {
+            bool v = true;
+            draw2(f, e.Graphics,v);
+            moo = 0;
+            max_x = new List<int>();
+            maxato = new List<int>();
+            TTT = new List<int>();
+            for (int i = 0; i < 200; i++)
+            {
+                max_x.Add(50);
+                maxato.Add(0);
+                TTT.Add(0);
+            }
+
+            //this.AutoScroll = true;
+
+            depth_est(f, 1);
+            hiii();
             //draw(f, 100, 100, e.Graphics);
         }
     }
